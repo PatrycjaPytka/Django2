@@ -4,6 +4,8 @@ from .views import new_form
 from .models import Autor, Ksiazka
 from .validators import validate_rok
 from django.core.exceptions import ValidationError
+from .forms import NaszForm
+
 
 class BibliotekaTests(TestCase):
     def test_nasz_pierwszy(self):
@@ -50,3 +52,29 @@ class BibliotekaTests(TestCase):
         self.assertEqual(validate_rok(2019), 2019)
 
     #forms
+    def test_nasz_form_valid(self):
+        form = NaszForm(data = {
+            'imie': "test",
+            'rok': 2020,
+        })
+        self.assertTrue(form.is_valid())
+
+    def test_nasz_form_valid(self):
+        form = NaszForm(data = {
+            'imie': "test",
+            'rok': 2025,
+        })
+        self.assertFalse(form.is_valid())
+
+#TDD - Test Driven Development
+#sposób pisania kodu zaczynając od testów
+    def test_ksiazka_metoda_jest_nowoczesna(self):
+        #powinna zwrocic True jezeli rok jest wiekszy niz 2000
+        self.assertTrue(self.ksiazka.jest_nowoczesna())
+        #.jest_nowoczesna jeszcze nie istnieje trzeba stworzyc te metode 
+
+    def test_ksiazka_metoda_jest_nowoczesna(self):
+        #powinna zwrocic False jezeli rok jest mniejszy lub rowny 2000
+        self.assertTrue(self.ksiazka.jest_nowoczesna)
+        ksiazka = Ksiazka.objects.create(tytul = "Testowa", rok_wydania = 2000, autor = self.autor)
+        self.assertFalse(self.ksiazka.jest_nowoczesna())

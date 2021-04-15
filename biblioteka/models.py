@@ -37,5 +37,8 @@ class Ksiazka(models.Model):
         validate_rok(self.rok_wydania)
         super(Ksiazka, self).save(*args,  **kwargs)
 
+    def jest_nowoczesna(self):
+        return True if self.rok_wydania > 2000 else False
+
     def __str__(self):
         return self.tytul
